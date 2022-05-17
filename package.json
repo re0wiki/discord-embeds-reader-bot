@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/CCXXXI/dicord-tweet-preview-bot/issues"
   },
-  "homepage": "https://github.com/CCXXXI/dicord-tweet-preview-bot"
+  "homepage": "https://github.com/CCXXXI/dicord-tweet-preview-bot",
+  "devDependencies": {
+    "typescript": "^4.6.4"
+  }
 }
