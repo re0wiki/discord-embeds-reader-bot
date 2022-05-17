@@ -1,5 +1,6 @@
 FROM browserless/chrome
 
+USER root
 WORKDIR /app
 COPY . .
 RUN npm i -g snap-tweet typescript ts-node
