@@ -131,3 +131,6 @@ dist
 
 # idea
 .idea/
+
+# token
+token.json
