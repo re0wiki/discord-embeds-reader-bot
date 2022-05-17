@@ -7,11 +7,14 @@ const client = new Client({
 
 const tweetUrl = /https:\/\/twitter\.com\/\w+\/status\/\d+/;
 client.on("messageCreate", (message) => {
+    // Ignore messages from myself
+    if (message.author == client.user) return;
+
     const match = message.content.match(tweetUrl);
-    if (match !== null) {
-        const url = match[0];
-        message.channel.send(`Got <${url}>`);
-    }
+    if (match === null) return;
+
+    const url = match[0];
+    message.channel.send(`Got <${url}>`);
 });
 
 // noinspection JSIgnoredPromiseFromCall
