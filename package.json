@@ -18,6 +18,9 @@
     "url": "https://github.com/CCXXXI/dicord-tweet-preview-bot/issues"
   },
   "homepage": "https://github.com/CCXXXI/dicord-tweet-preview-bot",
+  "dependencies": {
+    "discord.js": "^13.7.0"
+  },
   "devDependencies": {
     "typescript": "^4.6.4"
   }
