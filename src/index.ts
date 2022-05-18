@@ -1,4 +1,4 @@
-import { Client, Intents } from "discord.js";
+import { Client, Intents, Message } from "discord.js";
 import * as token from "./token.json";
 import { sleep } from "./utils";
 
@@ -23,13 +23,18 @@ client.on("messageCreate", async (msg) => {
     return;
   }
 
-  // Send embeds as normal message
-  await msg.channel.send(msg.embeds[0].description);
+  // Send embeds as normal messages
+  const sent: Message[] = [];
+  sent.push(await msg.channel.send(msg.embeds[0].description));
   const images = msg.embeds
     .map((e) => e.image)
     .filter((img) => img !== null)
     .map((img) => img.url);
-  if (images.length !== 0) await msg.channel.send({ files: images });
+  if (images.length !== 0) sent.push(await msg.channel.send({ files: images }));
+
+  // Delete sent messages after a few seconds. They are useless for discord users.
+  await sleep(10000);
+  sent.forEach((msg) => msg.delete());
 });
 
 // noinspection JSIgnoredPromiseFromCall
