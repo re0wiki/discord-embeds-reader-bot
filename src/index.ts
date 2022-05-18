@@ -7,25 +7,25 @@ const client = new Client({
 });
 
 const tweetUrl = /https:\/\/twitter\.com\/\w+\/status\/\d+/;
-client.on("messageCreate", async (message) => {
+client.on("messageCreate", async (msg) => {
   // Ignore messages from myself
-  if (message.author == client.user) return;
+  if (msg.author == client.user) return;
 
   // Ignore messages without tweet URL
-  if (message.content.match(tweetUrl) === null) return;
+  if (msg.content.match(tweetUrl) === null) return;
 
   // Wait for the embed to appear
   await sleep(1000);
 
   // Handle massages without embeds
-  if (message.embeds.length === 0) {
-    console.log(`No embeds: ${message.content}`);
+  if (msg.embeds.length === 0) {
+    console.log(`No embeds: ${msg.content}`);
     return;
   }
 
   // Send embed content as normal message
-  const embed = message.embeds[0];
-  await message.channel.send(embed.description);
+  const embed = msg.embeds[0];
+  await msg.channel.send(embed.description);
 });
 
 // noinspection JSIgnoredPromiseFromCall
