@@ -8,7 +8,6 @@ const client = new Client({
 });
 
 const tweetUrl = /https:\/\/twitter\.com\/\w+\/status\/\d+/;
-let locked = false;
 client.on("messageCreate", (message) => {
   // Ignore messages from myself
   if (message.author == client.user) return;
@@ -16,12 +15,6 @@ client.on("messageCreate", (message) => {
   // Ignore messages without tweet URL
   const match = message.content.match(tweetUrl);
   if (match === null) return;
-
-  if (locked) {
-    console.log("locked");
-    return;
-  }
-  locked = true;
 
   const url = match[0];
   console.log(url);
@@ -35,8 +28,6 @@ client.on("messageCreate", (message) => {
     ],
   });
   fs.rmSync(`./tmp/${file}`);
-
-  locked = false;
 });
 
 // noinspection JSIgnoredPromiseFromCall
