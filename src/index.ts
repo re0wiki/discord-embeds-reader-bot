@@ -1,42 +1,35 @@
 import { Client, Intents } from "discord.js";
 import * as token from "./token.json";
-import { execSync } from "child_process";
-import * as fs from "fs";
+import { sleep } from "./utils";
 
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
 
 const tweetUrl = /https:\/\/twitter\.com\/\w+\/status\/\d+/;
-let locked = false;
-client.on("messageCreate", (message) => {
+client.on("messageCreate", async (msg) => {
   // Ignore messages from myself
-  if (message.author == client.user) return;
+  if (msg.author == client.user) return;
 
-  // Ignore messages without tweet URL
-  const match = message.content.match(tweetUrl);
-  if (match === null) return;
+  // Ignore messages without a tweet URL
+  if (msg.content.match(tweetUrl) === null) return;
 
-  if (locked) {
-    console.log("locked");
+  // Wait for the embeds to appear
+  await sleep(1000);
+
+  // Handle massages without embeds
+  if (msg.embeds.length === 0) {
+    console.log(`No embeds: ${msg.content}`);
     return;
   }
-  locked = true;
 
-  const url = match[0];
-  console.log(url);
-  execSync(`snap-tweet ${url} --output-dir ./tmp`);
-  const file = fs.readdirSync("tmp")[0];
-  message.channel.send({
-    files: [
-      {
-        attachment: `./tmp/${file}`,
-      },
-    ],
-  });
-  fs.rmSync(`./tmp/${file}`);
-
-  locked = false;
+  // Send embeds as normal message
+  await msg.channel.send(msg.embeds[0].description);
+  const images = msg.embeds
+    .map((e) => e.image)
+    .filter((img) => img !== null)
+    .map((img) => img.url);
+  if (images.length !== 0) await msg.channel.send({ files: images });
 });
 
 // noinspection JSIgnoredPromiseFromCall
