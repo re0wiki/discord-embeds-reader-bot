@@ -11,10 +11,10 @@ client.on("messageCreate", async (msg) => {
   // Ignore messages from myself
   if (msg.author == client.user) return;
 
-  // Ignore messages without tweet URL
+  // Ignore messages without a tweet URL
   if (msg.content.match(tweetUrl) === null) return;
 
-  // Wait for the embed to appear
+  // Wait for the embeds to appear
   await sleep(1000);
 
   // Handle massages without embeds
@@ -23,9 +23,13 @@ client.on("messageCreate", async (msg) => {
     return;
   }
 
-  // Send embed content as normal message
-  const embed = msg.embeds[0];
-  await msg.channel.send(embed.description);
+  // Send embeds as normal message
+  await msg.channel.send(msg.embeds[0].description);
+  const images = msg.embeds
+    .map((e) => e.image)
+    .filter((img) => img !== null)
+    .map((img) => img.url);
+  if (images.length !== 0) await msg.channel.send({ files: images });
 });
 
 // noinspection JSIgnoredPromiseFromCall
