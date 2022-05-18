@@ -15,7 +15,7 @@ client.on("messageCreate", async (msg) => {
   if (msg.content.match(tweetUrl) === null) return;
 
   // Wait for the embeds to appear
-  await sleep(1000);
+  await sleep(3000);
 
   // Handle massages without embeds
   if (msg.embeds.length === 0) {
