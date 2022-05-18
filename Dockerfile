@@ -1,8 +1,8 @@
 FROM browserless/chrome
+USER root
 
 RUN npm i -g snap-tweet typescript ts-node
 
-USER root
 WORKDIR /app
 COPY . .
 RUN npm i
