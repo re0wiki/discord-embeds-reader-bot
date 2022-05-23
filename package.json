@@ -22,8 +22,8 @@
     "discord.js": "13.7.0"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "5.25.0",
-    "@typescript-eslint/parser": "5.25.0",
+    "@typescript-eslint/eslint-plugin": "5.26.0",
+    "@typescript-eslint/parser": "5.26.0",
     "eslint": "8.16.0",
     "ts-node": "10.8.0",
     "typescript": "4.6.4"
