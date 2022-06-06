@@ -6,13 +6,9 @@ const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
 
-const tweetUrl = /https:\/\/twitter\.com\/\w+\/status\/\d+/;
 client.on("messageCreate", async (msg) => {
   // Ignore messages from myself
   if (msg.author == client.user) return;
-
-  // Ignore messages without a tweet URL
-  if (msg.content.match(tweetUrl) === null) return;
 
   // Wait for the embeds to appear
   await sleep(3000);
