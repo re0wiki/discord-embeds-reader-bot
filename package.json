@@ -1,5 +1,5 @@
 {
-  "name": "discord-tweet-preview-bot",
+  "name": "discord-embeds-reader-bot",
   "version": "1.0.0",
   "description": "",
   "main": "src/index.ts",
@@ -8,16 +8,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CCXXXI/discord-tweet-preview-bot.git"
+    "url": "git+https://github.com/CCXXXI/discord-embeds-reader-bot.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "private": true,
   "bugs": {
-    "url": "https://github.com/CCXXXI/discord-tweet-preview-bot/issues"
+    "url": "https://github.com/CCXXXI/discord-embeds-reader-bot/issues"
   },
-  "homepage": "https://github.com/CCXXXI/discord-tweet-preview-bot",
+  "homepage": "https://github.com/CCXXXI/discord-embeds-reader-bot",
   "dependencies": {
     "discord.js": "13.8.0"
   },
