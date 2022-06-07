@@ -20,7 +20,7 @@
   "homepage": "https://github.com/CCXXXI/discord-embeds-reader-bot",
   "dependencies": {
     "discord.js": "13.8.0",
-    "winston": "^3.7.2"
+    "winston": "3.7.2"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "5.27.1",
