@@ -3,7 +3,7 @@ commit_template: |
 
 restylers:
   - prettier-markdown:
-      arguments: [ "--prose-wrap", "preserve" ]
+      arguments: ["--prose-wrap", "preserve"]
   - "*"
 
 exclude:
