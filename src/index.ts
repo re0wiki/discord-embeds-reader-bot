@@ -1,37 +1,55 @@
-import { Client, Intents, Message } from "discord.js";
+import { Client, Intents } from "discord.js";
 import * as token from "./token.json";
-import { sleep } from "./utils";
+import { logger, sleep } from "./utils";
 
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
 
+const visited: Set<string> = new Set();
+
 client.on("messageCreate", async (msg) => {
-  // Ignore messages from myself
-  if (msg.author == client.user) return;
+  // Ignore visited messages
+  if (visited.has(msg.content)) {
+    logger.info(`Visited: ${msg.content}`);
+    return;
+  }
+  visited.add(msg.content);
 
   // Wait for the embeds to appear
-  await sleep(3000);
+  await sleep(5000);
+
+  // Convert the embeds to text and images
+  const text = msg.embeds
+    .flatMap((e) => [e.title, e.description])
+    .filter((s) => s !== null && s.length > 0)
+    .join("\n");
+  const images = msg.embeds
+    .flatMap((e) => [e.thumbnail, e.image, e.video])
+    .filter((img) => img !== null)
+    .map((img) => img.url);
 
   // Handle massages without embeds
-  if (msg.embeds.length === 0) {
-    console.log(`No embeds: ${msg.content}`);
+  if (text.length === 0 && images.length === 0) {
+    logger.debug(`No embeds: ${msg.content}`);
     return;
   }
 
-  // Send embeds as normal messages
-  const sent: Message[] = [];
-  sent.push(await msg.channel.send(msg.embeds[0].description));
-  const images = msg.embeds
-    .map((e) => e.image)
-    .filter((img) => img !== null)
-    .map((img) => img.url);
-  if (images.length !== 0) sent.push(await msg.channel.send({ files: images }));
+  // Log the text and images
+  if (text.length > 0) {
+    logger.info(`text: ${text}`);
+  }
+  if (images.length > 0) {
+    logger.info(`images: ${images}`);
+  }
 
-  // Delete sent messages after a few seconds. They are useless for discord users.
+  // Send the text and images as a normal message
+  const sent = await msg.channel.send({ content: text, files: images });
+
+  // Delete the message sent by the bot after a few seconds.
+  // It is useless for discord users.
   await sleep(10000);
-  sent.forEach((msg) => msg.delete());
+  await sent.delete();
 });
 
-// noinspection JSIgnoredPromiseFromCall
-client.login(token);
+client.login(token).then(() => logger.info("Logged in"));
