@@ -6,12 +6,15 @@ const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
 
+const visited: Set<string> = new Set();
+
 client.on("messageCreate", async (msg) => {
-  // Ignore messages from myself
-  if (msg.author == client.user) {
-    logger.debug(`From myself: ${msg.content}`);
+  // Ignore visited messages
+  if (visited.has(msg.content)) {
+    logger.info(`Visited: ${msg.content}`);
     return;
   }
+  visited.add(msg.content);
 
   // Wait for the embeds to appear
   await sleep(5000);
