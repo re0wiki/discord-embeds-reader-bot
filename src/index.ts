@@ -11,7 +11,7 @@ client.on("messageCreate", async (msg) => {
   if (msg.author == client.user) return;
 
   // Wait for the embeds to appear
-  await sleep(3000);
+  await sleep(5000);
 
   // Handle massages without embeds
   if (msg.embeds.length === 0) {
