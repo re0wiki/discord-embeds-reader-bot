@@ -18,11 +18,11 @@ client.on("messageCreate", async (msg) => {
 
   // Convert the embeds to text and images
   const text = msg.embeds
-    .map((e) => e.description)
-    .filter((d) => d.length > 0)
+    .flatMap((e) => [e.title, e.description])
+    .filter((s) => s !== null && s.length > 0)
     .join("\n");
   const images = msg.embeds
-    .map((e) => e.image)
+    .flatMap((e) => [e.thumbnail, e.image, e.video])
     .filter((img) => img !== null)
     .map((img) => img.url);
 
