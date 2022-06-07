@@ -1,4 +1,4 @@
-import { Client, Intents, Message } from "discord.js";
+import { Client, Intents } from "discord.js";
 import * as token from "./token.json";
 import { logger, sleep } from "./utils";
 
@@ -32,21 +32,19 @@ client.on("messageCreate", async (msg) => {
     return;
   }
 
-  // Send the converted message
-  let sent: Message;
-  if (images.length === 0) {
-    logger.info(`Sending text: ${text}`);
-    sent = await msg.channel.send(text);
-  } else if (text.length === 0) {
-    logger.info(`Sending images: ${images}`);
-    sent = await msg.channel.send({ files: images });
-  } else {
-    logger.info(`Sending text and ${images.length} images: ${text} ${images}`);
-    sent = await msg.channel.send({ content: text, files: images });
+  // Log the text and images
+  if (text.length > 0) {
+    logger.info(`text: ${text}`);
+  }
+  if (images.length > 0) {
+    logger.info(`images: ${images}`);
   }
 
-  // Delete the converted message after a few seconds.
-  // They are useless for discord users.
+  // Send the text and images as a normal message
+  const sent = await msg.channel.send({ content: text, files: images });
+
+  // Delete the message sent by the bot after a few seconds.
+  // It is useless for discord users.
   await sleep(10000);
   await sent.delete();
 });

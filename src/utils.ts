@@ -4,19 +4,11 @@ const logger = createLogger({
   level: "debug",
   transports: [
     new transports.Console({
-      format: format.combine(
-        format.timestamp(),
-        format.colorize(),
-        format.simple()
-      ),
+      format: format.combine(format.colorize(), format.simple()),
     }),
     new transports.File({
       filename: "discord-embeds-reader-bot.log",
-      format: format.combine(
-        format.timestamp(),
-        format.errors({ stack: true }),
-        format.simple()
-      ),
+      format: format.combine(format.timestamp(), format.json()),
     }),
   ],
 });
