@@ -11,7 +11,7 @@ const visited: Set<string> = new Set();
 client.on("messageCreate", async (msg) => {
   // Ignore visited messages
   if (visited.has(msg.content)) {
-    logger.info(`Visited: ${msg.content}`);
+    logger.debug(`Visited: ${msg.content}`);
     return;
   }
   visited.add(msg.content);
