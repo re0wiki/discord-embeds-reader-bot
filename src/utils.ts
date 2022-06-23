@@ -20,4 +20,8 @@ async function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export { logger, sleep };
+function unique<T>(arr: T[]): T[] {
+  return Array.from(new Set(arr));
+}
+
+export { logger, sleep, unique };

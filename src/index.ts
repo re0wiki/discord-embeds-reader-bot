@@ -1,6 +1,6 @@
 import { Client, Intents } from "discord.js";
 import * as token from "./token.json";
-import { logger, sleep } from "./utils";
+import { logger, sleep, unique } from "./utils";
 
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
@@ -20,9 +20,10 @@ client.on("messageCreate", async (msg) => {
   await sleep(5000);
 
   // Convert the embeds to text and images
-  const text = msg.embeds
+  const textArr = msg.embeds
     .flatMap((e) => [e.title, e.description])
-    .filter((s) => s !== null && s.length > 0)
+    .filter((s) => s !== null && s.length > 0);
+  const text = unique(textArr)
     .join("\n")
     .replace(/https:\/\/t.co\/\w+$/, "");
   const images = msg.embeds
