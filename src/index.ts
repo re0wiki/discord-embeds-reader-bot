@@ -1,9 +1,9 @@
-import { Client, Intents } from "discord.js";
+import { Client, GatewayIntentBits} from "discord.js";
 import * as token from "./token.json";
 import { logger, sleep, unique } from "./utils";
 
 const client = new Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
 });
 
 const visited: Set<string> = new Set();
