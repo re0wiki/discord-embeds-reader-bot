@@ -1,4 +1,4 @@
-import { Client, GatewayIntentBits} from "discord.js";
+import { Client, GatewayIntentBits } from "discord.js";
 import * as token from "./token.json";
 import { logger, sleep, unique } from "./utils";
 
@@ -46,7 +46,9 @@ client.on("messageCreate", async (msg) => {
   }
 
   // Send the text and images as a normal message
-  const sent = await msg.channel.send({ content: text, files: images });
+  const sent = await msg.channel.send(
+    text.length > 0 ? { content: text, files: images } : { files: images }
+  );
 
   // Delete the message sent by the bot after a few seconds.
   // It is useless for discord users.
