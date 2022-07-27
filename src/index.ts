@@ -31,7 +31,7 @@ client.on("messageCreate", async (msg) => {
     .join("\n")
     .replace(/https:\/\/t.co\/\w+$/, "");
   const images = msg.embeds
-    .flatMap((e) => [e.thumbnail, e.image, e.video])
+    .flatMap((e) => [e.thumbnail, e.image])
     .filter((img) => img !== null)
     .map((img) => img.url);
 
