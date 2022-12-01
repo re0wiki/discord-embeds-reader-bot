@@ -21,7 +21,7 @@
   "dependencies": {
     "@sentry/browser": "7.22.0",
     "@sentry/tracing": "7.22.0",
-    "discord.js": "14.7.0",
+    "discord.js": "14.7.1",
     "winston": "3.8.2"
   },
   "devDependencies": {
