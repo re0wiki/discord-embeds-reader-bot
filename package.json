@@ -19,8 +19,8 @@
   },
   "homepage": "https://github.com/CCXXXI/discord-embeds-reader-bot",
   "dependencies": {
-    "@sentry/browser": "7.37.2",
-    "@sentry/tracing": "7.37.2",
+    "@sentry/browser": "7.38.0",
+    "@sentry/tracing": "7.38.0",
     "discord.js": "14.7.1",
     "winston": "3.8.2"
   },
