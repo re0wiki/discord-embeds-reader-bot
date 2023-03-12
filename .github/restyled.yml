@@ -1,0 +1,5 @@
+auto: true
+commit_template: "style: restyle by ${restyler.name}"
+exclude:
+  # See https://github.com/CCXXXI/discord-embeds-reader-bot/pull/176.
+  - "src/token.example.json"
