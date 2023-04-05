@@ -21,6 +21,12 @@ const client = new Client({
 const visited: Set<string> = new Set();
 
 client.on("messageCreate", async (msg) => {
+  // Ignore messages from GitHub bot unless it contains "Issue opened"
+  if (msg.author.id === "193000443981463552" && !msg.content.includes("Issue opened")) {
+    logger.debug(`Ignored: ${msg.content}`);
+    return;
+  }
+
   // Ignore visited messages
   if (visited.has(msg.content)) {
     logger.debug(`Visited: ${msg.content}`);
