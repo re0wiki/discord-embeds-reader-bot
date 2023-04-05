@@ -21,17 +21,23 @@ const client = new Client({
 const visited: Set<string> = new Set();
 
 client.on("messageCreate", async (msg) => {
-  // Ignore visited messages
+  // Ignore messages from GitHub bot unless it contains "Issue opened".
+  if (msg.author.id === "193000443981463552" && !msg.content.includes("Issue opened")) {
+    logger.debug(`Ignored: ${msg.content}`);
+    return;
+  }
+
+  // Ignore visited messages.
   if (visited.has(msg.content)) {
     logger.debug(`Visited: ${msg.content}`);
     return;
   }
   visited.add(msg.content);
 
-  // Wait for the embeds to appear
+  // Wait for the embeds to appear.
   await sleep(5000);
 
-  // Convert the embeds to text and images
+  // Convert the embeds to text and images.
   const textArr = msg.embeds
     .flatMap((e) => [e.title, e.description])
     .filter((s) => s !== null && s.length > 0);
@@ -43,13 +49,13 @@ client.on("messageCreate", async (msg) => {
     .filter((img) => img !== null)
     .map((img) => img.url);
 
-  // Handle massages without embeds
+  // Handle massages without embeds.
   if (text.length === 0 && images.length === 0) {
     logger.debug(`No embeds: ${msg.content}`);
     return;
   }
 
-  // Log the text and images
+  // Log the text and images.
   if (text.length > 0) {
     logger.info(`text: ${text}`);
   }
@@ -57,7 +63,7 @@ client.on("messageCreate", async (msg) => {
     logger.info(`images: ${images}`);
   }
 
-  // Send the text and images as a normal message
+  // Send the text and images as a normal message.
   const sent = await msg.channel.send(
     text.length > 0 ? { content: text, files: images } : { files: images }
   );
