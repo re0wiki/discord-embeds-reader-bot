@@ -18,7 +18,7 @@ const client = new Client({
   ],
 });
 
-const visited: Set<string> = new Set();
+const visited = new Map<string, number>();
 
 client.on("messageCreate", async (msg) => {
   // Ignore messages from GitHub bot unless it contains "Issue opened".
@@ -27,12 +27,13 @@ client.on("messageCreate", async (msg) => {
     return;
   }
 
-  // Ignore visited messages.
-  if (visited.has(msg.content)) {
-    logger.debug(`Visited: ${msg.content}`);
-    return;
-  }
-  visited.add(msg.content);
+  // Ignore messages that have been visited more than 3 times.
+    const count = visited.get(msg.id) ?? 0;
+    if (count > 3) {
+        logger.debug(`Possible loop: ${msg.content}`);
+        return;
+    }
+    visited.set(msg.id, count + 1);
 
   // Wait for the embeds to appear.
   await sleep(5000);
