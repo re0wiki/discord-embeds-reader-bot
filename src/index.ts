@@ -2,11 +2,10 @@ import {Client, GatewayIntentBits} from "discord.js";
 import * as token from "./token.json";
 import {logger, sleep, unique} from "./utils";
 import * as Sentry from "@sentry/browser";
-import {BrowserTracing} from "@sentry/tracing";
 
 Sentry.init({
     dsn: "https://f7000f8a41884fb2adf01158278293fb@o996799.ingest.sentry.io/6617943",
-    integrations: [new BrowserTracing()],
+    integrations: [new Sentry.BrowserTracing()],
     tracesSampleRate: 1.0,
 });
 
@@ -18,33 +17,31 @@ const client = new Client({
     ],
 });
 
-const visited = new Map<string, number>();
-
 client.on("messageCreate", async (msg) => {
+    // Ignore messages sent by the bot itself.
+    if (msg.author.id === client.user?.id) {
+        logger.info(`Ignored message sent by myself: ${msg.content}`);
+        return;
+    }
+
     // Ignore messages from GitHub bot unless it contains "Issue opened".
     if (msg.author.id === "193000443981463552" && !msg.content.includes("Issue opened")) {
-        logger.debug(`Ignored: ${msg.content}`);
+        logger.info(`Ignored message from GitHub bot: ${msg.content}`);
         return;
     }
-
-    // Ignore messages that have been visited more than 3 times.
-    const count = visited.get(msg.id) ?? 0;
-    if (count > 3) {
-        logger.debug(`Possible loop: ${msg.content}`);
-        return;
-    }
-    visited.set(msg.id, count + 1);
 
     // Wait for the embeds to appear.
     await sleep(5000);
 
+    // Log the embeds.
+    logger.debug(JSON.stringify(msg.embeds, null, 2));
+
     // Convert the embeds to text and images.
     const textArr = msg.embeds
-        .flatMap((e) => [e.title, e.description])
-        .filter((s) => s !== null && s.length > 0);
+        .flatMap((e) => [e.author?.name, e.title, e.description, e.url])
+        .filter((s) => s !== null && s !== undefined && s.length > 0);
     const text = unique(textArr)
-        .join("\n")
-        .replace(/https:\/\/t.co\/\w+$/, "");
+        .join("\n");
     const images = msg.embeds
         .flatMap((e) => [e.thumbnail, e.image])
         .filter((img) => img !== null)
@@ -52,7 +49,7 @@ client.on("messageCreate", async (msg) => {
 
     // Handle massages without embeds.
     if (text.length === 0 && images.length === 0) {
-        logger.debug(`No embeds: ${msg.content}`);
+        logger.info(`No embeds: ${msg.content}`);
         return;
     }
 
