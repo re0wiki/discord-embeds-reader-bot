@@ -20,12 +20,12 @@ const client = new Client({
 client.on("messageCreate", async (msg) => {
     // Ignore messages sent by the bot itself.
     if (msg.author.id === client.user?.id) {
-        logger.debug(`Ignored message sent by myself: ${msg.content}`);
+        logger.info(`Ignored message sent by myself: ${msg.content}`);
     }
 
     // Ignore messages from GitHub bot unless it contains "Issue opened".
     if (msg.author.id === "193000443981463552" && !msg.content.includes("Issue opened")) {
-        logger.debug(`Ignored message from GitHub bot: ${msg.content}`);
+        logger.info(`Ignored message from GitHub bot: ${msg.content}`);
         return;
     }
 
@@ -45,7 +45,7 @@ client.on("messageCreate", async (msg) => {
 
     // Handle massages without embeds.
     if (text.length === 0 && images.length === 0) {
-        logger.debug(`No embeds: ${msg.content}`);
+        logger.info(`No embeds: ${msg.content}`);
         return;
     }
 
