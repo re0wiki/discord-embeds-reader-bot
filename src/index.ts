@@ -2,11 +2,10 @@ import {Client, GatewayIntentBits} from "discord.js";
 import * as token from "./token.json";
 import {logger, sleep, unique} from "./utils";
 import * as Sentry from "@sentry/browser";
-import {BrowserTracing} from "@sentry/tracing";
 
 Sentry.init({
     dsn: "https://f7000f8a41884fb2adf01158278293fb@o996799.ingest.sentry.io/6617943",
-    integrations: [new BrowserTracing()],
+    integrations: [new Sentry.BrowserTracing()],
     tracesSampleRate: 1.0,
 });
 
