@@ -37,8 +37,7 @@ client.on("messageCreate", async (msg) => {
         .flatMap((e) => [e.title, e.description])
         .filter((s) => s !== null && s.length > 0);
     const text = unique(textArr)
-        .join("\n")
-        .replace(/https:\/\/t.co\/\w+$/, "");
+        .join("\n");
     const images = msg.embeds
         .flatMap((e) => [e.thumbnail, e.image])
         .filter((img) => img !== null)
