@@ -17,22 +17,17 @@ const client = new Client({
     ],
 });
 
-const visited = new Map<string, number>();
-
 client.on("messageCreate", async (msg) => {
+    // Ignore messages sent by the bot itself.
+    if (msg.author.id === client.user?.id) {
+        logger.debug(`Ignored message sent by myself: ${msg.content}`);
+    }
+
     // Ignore messages from GitHub bot unless it contains "Issue opened".
     if (msg.author.id === "193000443981463552" && !msg.content.includes("Issue opened")) {
-        logger.debug(`Ignored: ${msg.content}`);
+        logger.debug(`Ignored message from GitHub bot: ${msg.content}`);
         return;
     }
-
-    // Ignore messages that have been visited more than 3 times.
-    const count = visited.get(msg.id) ?? 0;
-    if (count > 3) {
-        logger.debug(`Possible loop: ${msg.content}`);
-        return;
-    }
-    visited.set(msg.id, count + 1);
 
     // Wait for the embeds to appear.
     await sleep(5000);
