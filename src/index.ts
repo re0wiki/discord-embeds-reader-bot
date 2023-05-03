@@ -32,6 +32,9 @@ client.on("messageCreate", async (msg) => {
     // Wait for the embeds to appear.
     await sleep(5000);
 
+    // Log the embeds.
+    logger.debug(msg.embeds);
+
     // Convert the embeds to text and images.
     const textArr = msg.embeds
         .flatMap((e) => [e.title, e.description])
