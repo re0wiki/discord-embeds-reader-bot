@@ -33,7 +33,7 @@ client.on("messageCreate", async (msg) => {
     await sleep(5000);
 
     // Log the embeds.
-    logger.debug(msg.embeds);
+    logger.debug(msg.embeds.toString());
 
     // Convert the embeds to text and images.
     const textArr = msg.embeds
