@@ -21,6 +21,7 @@ client.on("messageCreate", async (msg) => {
     // Ignore messages sent by the bot itself.
     if (msg.author.id === client.user?.id) {
         logger.info(`Ignored message sent by myself: ${msg.content}`);
+        return;
     }
 
     // Ignore messages from GitHub bot unless it contains "Issue opened".
