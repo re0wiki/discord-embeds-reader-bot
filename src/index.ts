@@ -41,7 +41,8 @@ client.on("messageCreate", async (msg) => {
         .flatMap((e) => [e.author?.name, e.title, e.description, e.url])
         .filter((s) => s !== null && s !== undefined && s.length > 0);
     const text = unique(textArr)
-        .join("\n");
+        .join("\n")
+        .replace(/pixiv\.kikkia\.dev.*\/(\d+)_p0.*/g, "www.pixiv.net/artworks/$1");
     const images = msg.embeds
         .flatMap((e) => [e.thumbnail, e.image])
         .filter((img) => img !== null)
