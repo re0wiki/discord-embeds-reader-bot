@@ -43,15 +43,15 @@ client.on("messageCreate", async (msg) => {
     const text = unique(textArr)
         .join("\n")
         .replace(/pixiv\.kikkia\.dev.*\/(\d+)_p0.*/g, "www.pixiv.net/artworks/$1");
+    const pixivRegex = /(?<=pixiv\.kikkia\.dev\/).*(img.*)_.*/;
     const images = msg.embeds
         .flatMap((e) => [e.thumbnail, e.image])
         .filter((img) => img !== null)
-        .map((img) =>
-            img
-                .url
-                .replace(/(?<=pixiv\.kikkia\.dev\/).*(img.*)_custom.*/, "img-original/$1.jpg")
-                .replace(/(?<=pixiv\.kikkia\.dev\/).*(img.*)_square.*/, "img-original/$1.png")
-        );
+        .map((img) => img.url)
+        .flatMap((url) => [
+            url.replace(pixivRegex, "img-original/$1.jpg"),
+            url.replace(pixivRegex, "img-original/$1.png"),
+        ]);
 
     // Handle massages without embeds.
     if (text.length === 0 && images.length === 0) {
