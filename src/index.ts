@@ -46,7 +46,7 @@ client.on("messageCreate", async (msg) => {
     const images = msg.embeds
         .flatMap((e) => [e.thumbnail, e.image])
         .filter((img) => img !== null)
-        .map((img) => img.url);
+        .map((img) => img.url.replace(/(?<=pixiv\.kikkia\.dev\/).*(img.*)_.*/, "img-original/$1.jpg"));
 
     // Handle massages without embeds.
     if (text.length === 0 && images.length === 0) {
