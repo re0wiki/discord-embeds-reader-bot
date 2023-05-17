@@ -48,10 +48,10 @@ client.on("messageCreate", async (msg) => {
         .flatMap((e) => [e.thumbnail, e.image])
         .filter((img) => img !== null)
         .map((img) => img.url)
-        .flatMap((url) => [
+        .flatMap((url) => pixivRegex.test(url) ? [
             url.replace(pixivRegex, "img-original/$1.jpg"),
             url.replace(pixivRegex, "img-original/$1.png"),
-        ]);
+        ] : [url]);
 
     // Handle massages without embeds.
     if (text.length === 0 && images.length === 0) {
