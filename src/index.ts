@@ -36,7 +36,7 @@ client.on("messageCreate", async (msg) => {
         .filter((s) => s !== null && s !== undefined && s.length > 0);
     const text = unique(textArr)
         .join("\n")
-        .replace(/pixiv\.kikkia\.dev.*\/(\d+)_p0.*/g, "www.pixiv.net/artworks/$1");
+        .replace(/pixiv\.kikkia\.dev.*\/(\d+)_p0.*/, "www.pixiv.net/artworks/$1");
     const pixivRegex = /(?<=pixiv\.kikkia\.dev\/).*(img.*)_.*/;
     const images = msg.embeds
         .flatMap((e) => [e.thumbnail, e.image])
