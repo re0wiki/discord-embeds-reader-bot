@@ -38,7 +38,7 @@ client.on("messageCreate", async (msg) => {
 
     // Convert the embeds to text and images.
     const textArr = msg.embeds
-        .flatMap((e) => [msg.content, e.author?.name, e.title, e.description, e.url])
+        .flatMap((e) => [e.author?.name, e.title, e.description, e.url])
         .filter((s) => s !== null && s !== undefined && s.length > 0);
     const text = unique(textArr)
         .join("\n")
