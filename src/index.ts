@@ -39,8 +39,7 @@ client.on("messageCreate", async (msg) => {
     // Convert the embeds to text and images.
     const textArr = msg.embeds
         .flatMap((e) => [e.author?.name, e.title, e.description, e.url])
-        .filter((s) => s !== null && s !== undefined && s.length > 0)
-        .concat([msg.content]);
+        .filter((s) => s !== null && s !== undefined && s.length > 0);
     const text = unique(textArr)
         .join("\n")
         .replace(pixivRegex, "www.pixiv.net/artworks/$1");
