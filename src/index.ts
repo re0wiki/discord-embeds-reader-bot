@@ -30,6 +30,13 @@ client.on("messageCreate", async (msg) => {
     // Log the message.
     logger.debug(JSON.stringify(msg, null, 2));
 
+    // Get pixiv images from text instead of embeds.
+    const pixivRegex = /(?<=pixiv\.kikkia\.dev\/).*(img.*)_.*/;
+    const pixivImages = pixivRegex.test(msg.content) ? [
+        msg.content.replace(pixivRegex, "img-original/$1.jpg"),
+        msg.content.replace(pixivRegex, "img-original/$1.png"),
+    ] : [];
+
     // Convert the embeds to text and images.
     const textArr = msg.embeds
         .flatMap((e) => [e.author?.name, e.title, e.description, e.url])
@@ -37,15 +44,12 @@ client.on("messageCreate", async (msg) => {
     const text = unique(textArr)
         .join("\n")
         .replace(/pixiv\.kikkia\.dev.*\/(\d+)_p0.*/, "www.pixiv.net/artworks/$1");
-    const pixivRegex = /(?<=pixiv\.kikkia\.dev\/).*(img.*)_.*/;
     const images = msg.embeds
         .flatMap((e) => [e.thumbnail, e.image])
         .filter((img) => img !== null)
         .map((img) => img.url)
-        .flatMap((url) => pixivRegex.test(url) ? [
-            url.replace(pixivRegex, "img-original/$1.jpg"),
-            url.replace(pixivRegex, "img-original/$1.png"),
-        ] : [url]);
+        .filter((url) => !pixivRegex.test(url))
+        .concat(pixivImages);
 
     // Handle massages without embeds.
     if (text.length === 0 && images.length === 0) {
