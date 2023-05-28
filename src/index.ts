@@ -24,12 +24,6 @@ client.on("messageCreate", async (msg) => {
         return;
     }
 
-    // Ignore messages from GitHub bot unless it contains "Issue opened".
-    if (msg.author.id === "193000443981463552" && !msg.content.includes("Issue opened")) {
-        logger.info(`Ignored message from GitHub bot: ${msg.content}`);
-        return;
-    }
-
     // Wait for the embeds to appear.
     await sleep(5000);
 
