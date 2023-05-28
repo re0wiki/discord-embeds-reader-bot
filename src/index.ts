@@ -38,14 +38,18 @@ client.on("messageCreate", async (msg) => {
         .join("\n")
         .replace(/pixiv\.kikkia\.dev.*\/(\d+)_p0.*/, "www.pixiv.net/artworks/$1");
     const pixivRegex = /(?<=pixiv\.kikkia\.dev\/).*(img.*)_.*/;
-    const images = msg.embeds
+    const imagesNoPixiv = msg.embeds
         .flatMap((e) => [e.thumbnail, e.image])
         .filter((img) => img !== null)
         .map((img) => img.url)
-        .flatMap((url) => pixivRegex.test(url) ? [
-            url.replace(pixivRegex, "img-original/$1.jpg"),
-            url.replace(pixivRegex, "img-original/$1.png"),
-        ] : [url]);
+        .filter((url) => !pixivRegex.test(url));
+    const imagesPixiv = textArr
+        .filter((s) => pixivRegex.test(s))
+        .flatMap((s) => [
+            s.replace(pixivRegex, "img-original/$1.jpg"),
+            s.replace(pixivRegex, "img-original/$1.png"),
+        ]);
+    const images = imagesNoPixiv.concat(imagesPixiv);
 
     // Handle massages without embeds.
     if (text.length === 0 && images.length === 0) {
