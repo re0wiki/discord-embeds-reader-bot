@@ -31,10 +31,10 @@ client.on("messageCreate", async (msg) => {
     logger.debug(JSON.stringify(msg, null, 2));
 
     // Get pixiv images from text instead of embeds.
-    const pixivRegex = /(?<=pixiv\.kikkia\.dev\/).*(img.*)_.*/;
+    const pixivRegex = /pixiv\.kikkia\.dev\/.*(img.*)_.*/;
     const pixivImages = pixivRegex.test(msg.content) ? [
-        msg.content.replace(pixivRegex, "img-original/$1.jpg"),
-        msg.content.replace(pixivRegex, "img-original/$1.png"),
+        msg.content.replace(pixivRegex, "pximg.wjghj.cn/img-original/$1.jpg"),
+        msg.content.replace(pixivRegex, "pximg.wjghj.cn/img-original/$1.png"),
     ] : [];
 
     // Convert the embeds to text and images.
