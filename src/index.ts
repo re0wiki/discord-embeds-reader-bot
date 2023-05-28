@@ -27,8 +27,8 @@ client.on("messageCreate", async (msg) => {
     // Wait for the embeds to appear.
     await sleep(5000);
 
-    // Log the embeds.
-    logger.debug(JSON.stringify(msg.embeds, null, 2));
+    // Log the message.
+    logger.debug(JSON.stringify(msg, null, 2));
 
     // Convert the embeds to text and images.
     const textArr = msg.embeds
