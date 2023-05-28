@@ -31,10 +31,9 @@ client.on("messageCreate", async (msg) => {
     logger.debug(JSON.stringify(msg, null, 2));
 
     // Get pixiv images from text instead of embeds.
-    const pixivRegex = /pixiv\.kikkia\.dev\/.*(img.*)_.*/;
+    const pixivRegex = /pixiv\.kikkia\.dev.*\/(\d+)_p0.*/;
     const pixivImages = pixivRegex.test(msg.content) ? [
-        msg.content.replace(pixivRegex, "pximg.wjghj.cn/img-original/$1.jpg"),
-        msg.content.replace(pixivRegex, "pximg.wjghj.cn/img-original/$1.png"),
+        msg.content.replace(pixivRegex, "pixiv.cat/$1.png"),
     ] : [];
 
     // Convert the embeds to text and images.
@@ -43,7 +42,7 @@ client.on("messageCreate", async (msg) => {
         .filter((s) => s !== null && s !== undefined && s.length > 0);
     const text = unique(textArr)
         .join("\n")
-        .replace(/pixiv\.kikkia\.dev.*\/(\d+)_p0.*/, "www.pixiv.net/artworks/$1");
+        .replace(pixivRegex, "www.pixiv.net/artworks/$1");
     const images = msg.embeds
         .flatMap((e) => [e.thumbnail, e.image])
         .filter((img) => img !== null)
