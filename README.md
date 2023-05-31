@@ -6,6 +6,4 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![CodeFactor](https://www.codefactor.io/repository/github/ccxxxi/discord-embeds-reader-bot/badge)](https://www.codefactor.io/repository/github/ccxxxi/discord-embeds-reader-bot)
 
-When the bot sees a message with embeds, it converts it to a normal message that just contains text and images. Then it will send the normal message to the same channel as the original message and immediately delete the message it sent.
-
-It is designed to be used in combination with [rabbitkiller-dev/message_bridge_rs](https://github.com/rabbitkiller-dev/message_bridge_rs).
+A monkey patch for [rabbitkiller-dev/message_bridge_rs](https://github.com/rabbitkiller-dev/message_bridge_rs).
