@@ -24,6 +24,12 @@ client.on("messageCreate", async (msg) => {
         return;
     }
 
+    // Ignore messages without any links.
+    if (!msg.content.includes("https://")) {
+        logger.info(`Ignored message without links: ${msg.content}`);
+        return;
+    }
+
     // Wait for the embeds to appear.
     await sleep(5000);
 
