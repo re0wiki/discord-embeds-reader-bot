@@ -25,7 +25,8 @@ client.on("messageCreate", async (msg) => {
     }
 
     // Ignore messages without any links.
-    if (!msg.content.includes("https://")) {
+    // https://gchat.qpic.cn/... is an image. Ignore it.
+    if (!msg.content.includes("https://(?!gchat)")) {
         logger.info(`Ignored message without links: ${msg.content}`);
         return;
     }
