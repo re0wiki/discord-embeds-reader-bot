@@ -24,6 +24,13 @@ client.on("messageCreate", async (msg) => {
         return;
     }
 
+    // Ignore messages without any links.
+    // https://gchat.qpic.cn/... is an image. Ignore it.
+    if (!msg.content.includes("https://") || msg.content.includes("gchat.qpic.cn")) {
+        logger.info(`Ignored message without links: ${msg.content}`);
+        return;
+    }
+
     // Wait for the embeds to appear.
     await sleep(5000);
 
@@ -43,7 +50,8 @@ client.on("messageCreate", async (msg) => {
         .concat(pixivRegex.test(msg.content) ? [msg.content] : []);
     const text = unique(textArr)
         .join("\n")
-        .replace(pixivRegex, "www.pixiv.net/artworks/$1");
+        .replace(pixivRegex, "www.pixiv.net/artworks/$1")
+        .replace(/(https.*)/g, "<$1>");
     const images = msg.embeds
         .flatMap((e) => [e.thumbnail, e.image])
         .filter((img) => img !== null)
@@ -66,14 +74,9 @@ client.on("messageCreate", async (msg) => {
     }
 
     // Send the text and images as a normal message.
-    const sent = await msg.channel.send(
+    await msg.channel.send(
         text.length > 0 ? {content: text, files: images} : {files: images}
     );
-
-    // Delete the message sent by the bot after a few seconds.
-    // It is useless for discord users.
-    await sleep(10000);
-    await sent.delete();
 });
 
 client.login(token).then(() => logger.info("Logged in"));
