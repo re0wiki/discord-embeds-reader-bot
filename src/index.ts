@@ -72,14 +72,9 @@ client.on("messageCreate", async (msg) => {
     }
 
     // Send the text and images as a normal message.
-    const sent = await msg.channel.send(
+    await msg.channel.send(
         text.length > 0 ? {content: text, files: images} : {files: images}
     );
-
-    // Delete the message sent by the bot after a few seconds.
-    // It is useless for discord users.
-    await sleep(10000);
-    await sent.delete();
 });
 
 client.login(token).then(() => logger.info("Logged in"));
