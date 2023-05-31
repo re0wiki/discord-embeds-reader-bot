@@ -51,7 +51,7 @@ client.on("messageCreate", async (msg) => {
     const text = unique(textArr)
         .join("\n")
         .replace(pixivRegex, "www.pixiv.net/artworks/$1")
-        .replace(/https.*/g, "<$0>");
+        .replace(/(https.*)/g, "<$1>");
     const images = msg.embeds
         .flatMap((e) => [e.thumbnail, e.image])
         .filter((img) => img !== null)
