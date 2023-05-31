@@ -6,4 +6,4 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![CodeFactor](https://www.codefactor.io/repository/github/ccxxxi/discord-embeds-reader-bot/badge)](https://www.codefactor.io/repository/github/ccxxxi/discord-embeds-reader-bot)
 
-A monkey patch for [rabbitkiller-dev/message_bridge_rs](https://github.com/rabbitkiller-dev/message_bridge_rs).
+A monkey patch for [koishijs/koishi-plugin-dcqq-relay](https://github.com/koishijs/koishi-plugin-dcqq-relay) and [rabbitkiller-dev/message_bridge_rs](https://github.com/rabbitkiller-dev/message_bridge_rs).
