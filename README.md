@@ -1,3 +1,7 @@
+[koishijs/koishi-plugin-dcqq-relay](https://github.com/koishijs/koishi-plugin-dcqq-relay) is better than [rabbitkiller-dev/message_bridge_rs](https://github.com/rabbitkiller-dev/message_bridge_rs) + this. This bot is no longer maintained.
+
+---
+
 # Discord Embeds Reader Bot
 
 [![GitHub license](https://img.shields.io/github/license/ccxxxi/discord-embeds-reader-bot)](LICENSE)
