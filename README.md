@@ -1,4 +1,4 @@
-[koishijs/koishi-plugin-dcqq-relay](https://github.com/koishijs/koishi-plugin-dcqq-relay) is better than [rabbitkiller-dev/message_bridge_rs](https://github.com/rabbitkiller-dev/message_bridge_rs) + this. This bot is no longer maintained.
+[koishi-plugin-dcqq-relay](https://github.com/koishijs/koishi-plugin-dcqq-relay) is better than [message_bridge_rs](https://github.com/rabbitkiller-dev/message_bridge_rs) + this. This bot is no longer maintained.
 
 ---
 
